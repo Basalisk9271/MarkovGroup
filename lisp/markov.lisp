@@ -1,5 +1,4 @@
 #!/usr/bin/sbcl --script
-;; EXCUTE: sbcl --script markov.lisp
 
 ;; LIMIT: 100000000000000000000000000000000000000
 
@@ -46,28 +45,24 @@
 )) ;; END FUNCTION COLLAPSE
 
 ;; WORK WITH STRINGS
-;(defun toRoman (val) (let (output "")
-;    (loop while (< 0 val) do 
-;        (if (<= 9 val)(progn
-;            (setf output (+ output "IX"))
-;            (setf val (- val 9)))
-;        (if (< 5 val) (progn        ;else 1
-;            (setf output (+ output "V"))
-;            (setf val (- val 5)))
-;        )
-;        (if (<= 4 val) (progn       ;else 2
-;            (setf output (+ output "IV"))
-;            (setf val (- val 4)))
-;        )
-;        (progn                      ;else 3
-;            (setf output (+ output "I"))
-;            (setf val (- val 1))
-;        ))
-;    )
-;    
-;    (return-from toRoman output)
-;))
-(defun toRoman (val) (return-from toRoman "III"))
+(defun toRoman (val) (let ((output ""))
+    (loop while (< 0 val) do 
+        (if (<= 9 val)(progn
+            (setf output (concatenate 'string output "IX"))
+            (setf val (- val 9)))
+        (if (<= 5 val) (progn        ;else 1
+            (setf output (concatenate 'string output "V"))
+            (setf val (- val 5)))
+        (if (<= 4 val) (progn       ;else 2
+            (setf output (concatenate 'string output "IV"))
+            (setf val (- val 4)))
+        (progn                      ;else 3
+            (setf output (concatenate 'string output "I"))
+            (setf val (- val 1))
+        ))))
+    )
+    output
+))
 
 ;;;;;;;;;;;;;;;;;;;;;;; MAIN ;;;;;;;;;;;;;;;;;;;;;;;
 (let ((LOWER_BOUND 0)
@@ -83,7 +78,7 @@
     (if (< UPPER_BOUND LOWER_BOUND) (rotatef LOWER_BOUND UPPER_BOUND))
 
     (setf sum (markov LOWER_BOUND UPPER_BOUND))
-    (setf col (collapse sum))
+    (setf col (truncate (collapse sum)))
 
     (format t "   Count: ~d~%" TRACK)
     (format t "     Sum: ~d~%" sum)
