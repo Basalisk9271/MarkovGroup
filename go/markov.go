@@ -31,11 +31,13 @@ func main() {
 	fmt.println("   Count: " + count);
     fmt.println("     Sum: " + sum);
     fmt.println("Collapse: " + col);
-    fmt.println("   Roman: " + toRoman((int)(col)));
-	//if col%2 == 0
-
-    //fmt.println(col%2==0 ? "-- Hail Caesar!" : "-- et tu Brute!");
-	// if col %2 0 hail caeser else
+    fmt.println("   Roman: " + toRoman(int(col)));
+	if (col%2 == 0){
+    	fmt.println("-- Hail Caesar!")
+	
+	}else{
+		fmt.println("-- et tu Brute!")
+	}
 	/*
 	
 	  System.out.println();
@@ -97,8 +99,49 @@ func collapse(num int64) int64 {
 	return collapse(sum);
 }
 
-func toRoman() string {
+func toRoman(val int) string {
 
+	//String output = new String();
+	var output string
+
+	while(val > 0){
+		if(100 < val){
+			output += "L";
+			val -= 100;
+		}
+		else if(99 < val){
+			output += "IL";
+			val -= 99;
+		}
+		else if(50 < val){
+			output += "C";
+			val -= 50;
+		}
+		else if(49 < val){
+			output += "IC";
+			val -= 49;
+		}
+		else if(10 < val){
+			output += "X";
+			val -= 10;
+		}
+		else if(9 <= val){
+			output += "IX";
+			val -= 9;
+		}
+		else if(5 < val){
+			output += "V";
+			val -= 5;
+		}
+		else if(4 <= val){
+			output += "IV";
+			val -= 4;
+		}
+		else{
+			output += "I";
+			val -= 1;
+		}
+	}
 }
 
 /*
