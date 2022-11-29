@@ -58,15 +58,15 @@ func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64) 
             +      gen_markov_sequence(lower, upper, b, c, (3*b*c - a))  //Bottom branch
 		}
     }        
-    count++;
+    count++
 
     if(c <= 2){
 		return c 
-        + gen_markov_sequence(lower, upper, a, c, (3*a*c - b));  //Top branch ONLY
+        + gen_markov_sequence(lower, upper, a, c, (3*a*c - b))  //Top branch ONLY
 	}else {
 		return c 
         + gen_markov_sequence(lower, upper, a, c, (3*a*c - b))   //Top branch
-        + gen_markov_sequence(lower, upper, b, c, (3*b*c - a));  //Bottom branch
+        + gen_markov_sequence(lower, upper, b, c, (3*b*c - a))  //Bottom branch
 	}
         
 }
@@ -78,45 +78,45 @@ func collapse(num int64) int64 {
 	}
         
 	sum = 0
-	for i = num; i > 0; i /= 10{
-		sum += (number %10);
+	for i = num i > 0 i /= 10{
+		sum += (number %10)
 	}
-	return collapse(sum);
+	return collapse(sum)
 }
 
 func toRoman(val int) string {
 
-	//String output = new String();
+	//String output = new String()
 	var output string
 
 	while(val > 0){
 		if(100 < val){
-			output := output + "L";
-			val -= 100;
+			output := output + "L"
+			val -= 100
 		}else if(99 < val){
-			output := output + "IL";
-			val -= 99;
+			output := output + "IL"
+			val -= 99
 		}else if(50 < val){
-			output := output + "C";
-			val -= 50;
+			output := output + "C"
+			val -= 50
 		}else if(49 < val){
-			output := output + "IC";
-			val -= 49;
+			output := output + "IC"
+			val -= 49
 		}else if(10 < val){
-			output := output + "X";
-			val -= 10;
+			output := output + "X"
+			val -= 10
 		}else if(9 <= val){
-			output := output + "IX";
-			val -= 9;
+			output := output + "IX"
+			val -= 9
 		}else if(5 < val){
-			output := output + "V";
-			val -= 5;
+			output := output + "V"
+			val -= 5
 		}else if(4 <= val){
-			output := output + "IV";
-			val -= 4;
+			output := output + "IV"
+			val -= 4
 		}else{
-			output := output + "I";
-			val -= 1;
+			output := output + "I"
+			val -= 1
 		}
 	}
 	return output
