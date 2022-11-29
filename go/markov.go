@@ -7,6 +7,10 @@ func main() {
 	var upper int64
 	var count int64
 	
+	lower = 0
+	upper = 50
+	count = 0
+	
 	fmt.Println("Lower: ")
 	fmt.Scan(&lower)
 	
@@ -20,20 +24,20 @@ func main() {
 
 }
 
-func markovRange(int64 lower, int64 upper){
+func markovRange(lower int64 , upper int64 ) int64 {
 	return gen_markov_sequence(lower, upper, 1, 1, 1)
 
 }
 
-func gen_markov_sequence(){
+func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64) int64 {
 
 }
 
-func collapse(){
+func collapse() int64 {
 
 }
 
-func toRoman(){
+func toRoman() string {
 
 }
 
