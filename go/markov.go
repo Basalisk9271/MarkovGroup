@@ -10,7 +10,7 @@ func main() {
 	lower = 0
 	upper = 50
 	count = 0
-	
+
 	fmt.Println("Lower: ")
 	fmt.Scan(&lower)
 	
@@ -30,7 +30,23 @@ func markovRange(lower int64 , upper int64 ) int64 {
 }
 
 func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64) int64 {
+	if(c > upper) return 0;
+    if(c < lower)
+        if(c <= 2)
+            return gen_markov_sequence(lower, upper, a, c, (3*a*c - b));
+        else
+            return gen_markov_sequence(lower, upper, a, c, (3*a*c - b))   //Top branch
+            +      gen_markov_sequence(lower, upper, b, c, (3*b*c - a));  //Bottom branch
 
+    COUNT++;
+
+    if(c <= 2)
+        return c 
+        + gen_markov_sequence(lower, upper, a, c, (3*a*c - b));  //Top branch ONLY
+    else 
+        return c 
+        + gen_markov_sequence(lower, upper, a, c, (3*a*c - b))   //Top branch
+        + gen_markov_sequence(lower, upper, b, c, (3*b*c - a));  //Bottom branch
 }
 
 func collapse() int64 {
