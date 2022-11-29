@@ -19,8 +19,36 @@ func main() {
 
 	if lower > upper {
 		var temp int64
-
+		temp := lower
+		lower := upper
+		upper := temp
 	}
+	fmt.println()
+
+	var sum int64 = markovRange(lower, upper)
+	var col int64 = collapse(sum)
+
+	fmt.println("   Count: " + count);
+    fmt.println("     Sum: " + sum);
+    fmt.println("Collapse: " + col);
+    fmt.println("   Roman: " + toRoman((int)(col)));
+	//if col%2 == 0
+
+    //fmt.println(col%2==0 ? "-- Hail Caesar!" : "-- et tu Brute!");
+	// if col %2 0 hail caeser else
+	/*
+	
+	  System.out.println();
+        
+        long sum = markovRange(LOWER_BOUND, UPPER_BOUND);
+        long col = collapse(sum);
+
+        System.out.println("   Count: " + COUNT);
+        System.out.println("     Sum: " + sum);
+        System.out.println("Collapse: " + col);
+        System.out.println("   Roman: " + toRoman((int)(col)));
+        System.out.println(col%2==0 ? "-- Hail Caesar!" : "-- et tu Brute!");
+	*/
 
 }
 
