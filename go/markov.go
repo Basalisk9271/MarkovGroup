@@ -14,8 +14,8 @@ func main() {
 	fmt.Scan(&upper)
 }
 
-func markovRange(){
-
+func markovRange(int64 lower, int64 upper){
+	return gen_markov_sequence(lower, upper, 1, 1, 1)
 
 }
 
