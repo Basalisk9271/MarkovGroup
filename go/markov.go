@@ -3,7 +3,14 @@ import ("fmt")
 package main
 
 func main() {
-
+	var lower float64
+	var upper float64
+	
+	fmt.Println("Lower: ")
+	fmt.Scan(&lower)
+	
+	fmt.Println("Upper: ")
+	fmt.Scan(&upper)
 }
 
 func markovRange(){
