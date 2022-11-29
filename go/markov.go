@@ -77,7 +77,7 @@ func collapse(num int64) int64 {
         
 	sum = 0
 	for i = num; i > 0; i /= 10{
-		sum += (num % 10)
+		sum += (i % 10)
 	}
 	return collapse(sum)
 }
