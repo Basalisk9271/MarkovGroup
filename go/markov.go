@@ -12,6 +12,12 @@ func main() {
 	
 	fmt.Println("Upper: ")
 	fmt.Scan(&upper)
+
+	if lower > upper {
+		var temp int64
+
+	}
+
 }
 
 func markovRange(int64 lower, int64 upper){
