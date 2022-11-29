@@ -61,7 +61,7 @@ func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64) 
     count++
 
     if(c <= 2){
-		return c + gen_markov_sequence(lower, upper, a, c, (3*a*c - b))  //Top branch ONLY
+		return c + gen_markov_sequence(lower, upper, a, c, (3*a*c - b))  
 	} else {
 		return c + gen_markov_sequence(lower, upper, a, c, (3*a*c - b)) + gen_markov_sequence(lower, upper, b, c, (3*b*c - a))
 	}
