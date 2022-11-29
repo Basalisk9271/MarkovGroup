@@ -71,7 +71,7 @@ func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64) 
             +      gen_markov_sequence(lower, upper, b, c, (3*b*c - a))  //Bottom branch
 		}
             
-    COUNT++;
+    count++;
 
     if(c <= 2){
 		return c 
@@ -106,77 +106,41 @@ func toRoman(val int) string {
 
 	while(val > 0){
 		if(100 < val){
-			output += "L";
+			output := output + "L";
 			val -= 100;
 		}
 		else if(99 < val){
-			output += "IL";
+			output := output + "IL";
 			val -= 99;
 		}
 		else if(50 < val){
-			output += "C";
+			output := output + "C";
 			val -= 50;
 		}
 		else if(49 < val){
-			output += "IC";
+			output := output + "IC";
 			val -= 49;
 		}
 		else if(10 < val){
-			output += "X";
+			output := output + "X";
 			val -= 10;
 		}
 		else if(9 <= val){
-			output += "IX";
+			output := output + "IX";
 			val -= 9;
 		}
 		else if(5 < val){
-			output += "V";
+			output := output + "V";
 			val -= 5;
 		}
 		else if(4 <= val){
-			output += "IV";
+			output := output + "IV";
 			val -= 4;
 		}
 		else{
-			output += "I";
+			output := output + "I";
 			val -= 1;
 		}
 	}
+	return output
 }
-
-/*
-
-//%d for integers
-//%f for floating-point numbers
-
-//User input:
-
-var lower int64
-var upper int64
-
-fmt.Println("Lower: ")
-fmt.Scan(&lower)
-
-fmt.Println("Upper: ")
-fmt.Scan(&upper)
- 
-Print:
-
-fmt.Println(i, "\n")
-
-
-Main{}
-
-markovRange{}
-
-gen_markov_sequence{}
-
-Collapse{}
-
-toRoman{}
-
-
- */
-
-
-
