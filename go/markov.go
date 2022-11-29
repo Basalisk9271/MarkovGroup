@@ -17,27 +17,24 @@ func main() {
 	fmt.Println("Upper: ")
 	fmt.Scan(&upper)
 
-	if lower > upper {
-		var temp int64
-		temp := lower
-		lower := upper
-		upper := temp
+	if (lower > upper){
+		lower, upper = upper, lower
 	}
-	fmt.println()
+	fmt.Println()
 
 	var sum int64 = markovRange(lower, upper)
 	var col int64 = collapse(sum)
 
-	fmt.println("   Count: " + count)
-	fmt.println("     Sum: " + sum)
-	fmt.println("Collapse: " + col)
-	fmt.println("   Roman: " + toRoman(int(col)))
+	fmt.Println("   Count: ",count)
+	fmt.Println("     Sum: ", sum)
+	fmt.Println("Collapse: ", col)
+	fmt.Println("   Roman: ", toRoman(int(col)))
 	
 	if (col%2 == 0){
-    	fmt.println("-- Hail Caesar!")
+    	fmt.Println("-- Hail Caesar!")
 	
 	}else{
-		fmt.println("-- et tu Brute!")
+		fmt.Println("-- et tu Brute!")
 	
 	}
 
@@ -50,24 +47,23 @@ func markovRange(lower int64 , upper int64 ) int64 {
 
 func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64) int64 {
 	// Base cases
-	if(c > upper) return 0
-    if(c < lower)
+	if(c > upper){
+		return 0
+	}
+    if(c < lower){
         if(c <= 2){
 			return gen_markov_sequence(lower, upper, a, c, (3*a*c - b))
-		}
-        else{
+		}else {
 			return gen_markov_sequence(lower, upper, a, c, (3*a*c - b))   //Top branch
             +      gen_markov_sequence(lower, upper, b, c, (3*b*c - a))  //Bottom branch
 		}
-            
+    }        
     count++;
 
     if(c <= 2){
 		return c 
         + gen_markov_sequence(lower, upper, a, c, (3*a*c - b));  //Top branch ONLY
-	}
-        
-    else {
+	}else {
 		return c 
         + gen_markov_sequence(lower, upper, a, c, (3*a*c - b))   //Top branch
         + gen_markov_sequence(lower, upper, b, c, (3*b*c - a));  //Bottom branch
@@ -76,12 +72,12 @@ func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64) 
 }
 
 func collapse(num int64) int64 {
-	var i int64
+	var i , sum int64
 	if(num < 10) {
 		return num
 	}
         
-	long sum = 0;
+	sum = 0
 	for i = num; i > 0; i /= 10{
 		sum += (number %10);
 	}
@@ -97,36 +93,28 @@ func toRoman(val int) string {
 		if(100 < val){
 			output := output + "L";
 			val -= 100;
-		}
-		else if(99 < val){
+		}else if(99 < val){
 			output := output + "IL";
 			val -= 99;
-		}
-		else if(50 < val){
+		}else if(50 < val){
 			output := output + "C";
 			val -= 50;
-		}
-		else if(49 < val){
+		}else if(49 < val){
 			output := output + "IC";
 			val -= 49;
-		}
-		else if(10 < val){
+		}else if(10 < val){
 			output := output + "X";
 			val -= 10;
-		}
-		else if(9 <= val){
+		}else if(9 <= val){
 			output := output + "IX";
 			val -= 9;
-		}
-		else if(5 < val){
+		}else if(5 < val){
 			output := output + "V";
 			val -= 5;
-		}
-		else if(4 <= val){
+		}else if(4 <= val){
 			output := output + "IV";
 			val -= 4;
-		}
-		else{
+		}else{
 			output := output + "I";
 			val -= 1;
 		}
