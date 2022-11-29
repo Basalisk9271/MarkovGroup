@@ -1,44 +1,45 @@
 package main
 
 import ("fmt")
+import "os"
+import "strconv"
 
-var lower int64
-var upper int64
+var lower int
+var upper int
 var count int64
 
 func main() {
 	
 	
-	lower = 0
-	upper = 50
 	count = 0
+	lower,err := (strconv.Atoi(os.Args[1]))
+	upper,err := (strconv.Atoi(os.Args[2]))
+	if ( err != nil ) { 
+        fmt.Println("Your inputs are invalid")
+    }else{
+		if (lower > upper){
+			lower, upper = upper, lower
+		}
+		fmt.Println()
 
-	fmt.Println("Lower: ")
-	fmt.Scan(&lower)
-	
-	fmt.Println("Upper: ")
-	fmt.Scan(&upper)
+		var sum int64 = markovRange(int64(lower), int64(upper)) 
+		//must cast to int64 to take into markovRange as a parameter
+		var col int64 = collapse(sum)
 
-	if (lower > upper){
-		lower, upper = upper, lower
+		fmt.Println("   Count: ",count)
+		fmt.Println("     Sum: ", sum)
+		fmt.Println("Collapse: ", col)
+		fmt.Println("   Roman: ", toRoman(int(col)))
+		
+		if (col%2 == 0){
+			fmt.Println("-- Hail Caesar!")
+		
+		}else{
+			fmt.Println("-- et tu Brute!")
+		
+		}
 	}
-	fmt.Println()
-
-	var sum int64 = markovRange(lower, upper)
-	var col int64 = collapse(sum)
-
-	fmt.Println("   Count: ",count)
-	fmt.Println("     Sum: ", sum)
-	fmt.Println("Collapse: ", col)
-	fmt.Println("   Roman: ", toRoman(int(col)))
 	
-	if (col%2 == 0){
-    	fmt.Println("-- Hail Caesar!")
-	
-	}else{
-		fmt.Println("-- et tu Brute!")
-	
-	}
 
 }
 
