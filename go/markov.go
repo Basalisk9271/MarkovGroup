@@ -1,6 +1,6 @@
 package main
 
-import ("fmt")
+import "fmt"
 import "os"
 import "strconv"
 
@@ -9,14 +9,12 @@ var upper int
 var count int64
 
 func main() {
-	
-	
 	count = 0
-	lower,err := (strconv.Atoi(os.Args[1]))
+	lower,err := (strconv.Atoi(os.Args[1])) 		//get inputs from command line
 	upper,err := (strconv.Atoi(os.Args[2]))
-	if ( err != nil ) { 
+	if ( err != nil ){  							
         fmt.Println("Your inputs are invalid")
-    }else{
+    } else {
 		if (lower > upper){
 			lower, upper = upper, lower
 		}
@@ -26,7 +24,7 @@ func main() {
 		//must cast to int64 to take into markovRange as a parameter
 		var col int64 = collapse(sum)
 
-		fmt.Println("   Count: ",count)
+		fmt.Println("   Count: ",count)			
 		fmt.Println("     Sum: ", sum)
 		fmt.Println("Collapse: ", col)
 		fmt.Println("   Roman: ", toRoman(int(col)))
@@ -34,7 +32,7 @@ func main() {
 		if (col%2 == 0){
 			fmt.Println("-- Hail Caesar!")
 		
-		}else{
+		} else {
 			fmt.Println("-- et tu Brute!")
 		
 		}
@@ -45,18 +43,18 @@ func main() {
 
 func markovRange(lower int64 , upper int64 ) int64 {
 	return gen_markov_sequence(lower, upper, 1, 1, 1)
-
 }
 
 func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64) int64 {
-	// Base cases
+	// Base cases 
 	if(c > upper){
 		return 0
 	}
+
     if(c < lower){
         if(c <= 2){
 			return gen_markov_sequence(lower, upper, a, c, (3*a*c - b))
-		}else {
+		} else {
 			return gen_markov_sequence(lower, upper, a, c, (3*a*c - b)) + gen_markov_sequence(lower, upper, b, c, (3*b*c - a))
 		}
     }        
@@ -64,10 +62,9 @@ func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64) 
 
     if(c <= 2){
 		return c + gen_markov_sequence(lower, upper, a, c, (3*a*c - b))  //Top branch ONLY
-	}else {
+	} else {
 		return c + gen_markov_sequence(lower, upper, a, c, (3*a*c - b)) + gen_markov_sequence(lower, upper, b, c, (3*b*c - a))
 	}
-        
 }
 
 func collapse(num int64) int64 {
@@ -87,7 +84,7 @@ func toRoman(val int) string {
 
 	//String output = new String()
 	var output string
-	if val == 0 {
+	if val == 0 {				//translating val to roman numerals 
 		output = "N"	
 	} else {
 		for (val > 0){
