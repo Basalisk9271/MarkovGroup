@@ -86,35 +86,38 @@ func toRoman(val int) string {
 
 	//String output = new String()
 	var output string
-
-	for (val > 0){
-		if(100 < val){
-			output = output + "L"
-			val -= 100
-		}else if(99 < val){
-			output = output + "IL"
-			val -= 99
-		}else if(50 < val){
-			output = output + "C"
-			val -= 50
-		}else if(49 < val){
-			output = output + "IC"
-			val -= 49
-		}else if(10 < val){
-			output = output + "X"
-			val -= 10
-		}else if(9 <= val){
-			output = output + "IX"
-			val -= 9
-		}else if(5 < val){
-			output = output + "V"
-			val -= 5
-		}else if(4 <= val){
-			output = output + "IV"
-			val -= 4
-		}else{
-			output = output + "I"
-			val -= 1
+	if val == 0 {
+		output = "N"	
+	} else {
+		for (val > 0){
+			if(100 < val){
+				output = output + "L"
+				val -= 100
+			}else if(99 < val){
+				output = output + "IL"
+				val -= 99
+			}else if(50 < val){
+				output = output + "C"
+				val -= 50
+			}else if(49 < val){
+				output = output + "IC"
+				val -= 49
+			}else if(10 < val){
+				output = output + "X"
+				val -= 10
+			}else if(9 <= val){
+				output = output + "IX"
+				val -= 9
+			}else if(5 < val){
+				output = output + "V"
+				val -= 5
+			}else if(4 <= val){
+				output = output + "IV"
+				val -= 4
+			}else{
+				output = output + "I"
+				val -= 1
+			}
 		}
 	}
 	return output
