@@ -2,10 +2,12 @@ package main
 
 import ("fmt")
 
+var lower int64
+var upper int64
+var count int64
+
 func main() {
-	var lower int64
-	var upper int64
-	var count int64
+	
 	
 	lower = 0
 	upper = 50
@@ -54,19 +56,15 @@ func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64) 
         if(c <= 2){
 			return gen_markov_sequence(lower, upper, a, c, (3*a*c - b))
 		}else {
-			return gen_markov_sequence(lower, upper, a, c, (3*a*c - b))   //Top branch
-            +      gen_markov_sequence(lower, upper, b, c, (3*b*c - a))  //Bottom branch
+			return gen_markov_sequence(lower, upper, a, c, (3*a*c - b)) + gen_markov_sequence(lower, upper, b, c, (3*b*c - a))
 		}
     }        
     count++
 
     if(c <= 2){
-		return c 
-        + gen_markov_sequence(lower, upper, a, c, (3*a*c - b))  //Top branch ONLY
+		return c + gen_markov_sequence(lower, upper, a, c, (3*a*c - b))  //Top branch ONLY
 	}else {
-		return c 
-        + gen_markov_sequence(lower, upper, a, c, (3*a*c - b))   //Top branch
-        + gen_markov_sequence(lower, upper, b, c, (3*b*c - a))  //Bottom branch
+		return c + gen_markov_sequence(lower, upper, a, c, (3*a*c - b)) + gen_markov_sequence(lower, upper, b, c, (3*b*c - a))
 	}
         
 }
@@ -78,8 +76,8 @@ func collapse(num int64) int64 {
 	}
         
 	sum = 0
-	for i = num i > 0 i /= 10{
-		sum += (number %10)
+	for i = num; i > 0; i /= 10{
+		sum += (num % 10)
 	}
 	return collapse(sum)
 }
@@ -89,33 +87,33 @@ func toRoman(val int) string {
 	//String output = new String()
 	var output string
 
-	while(val > 0){
+	for (val > 0){
 		if(100 < val){
-			output := output + "L"
+			output = output + "L"
 			val -= 100
 		}else if(99 < val){
-			output := output + "IL"
+			output = output + "IL"
 			val -= 99
 		}else if(50 < val){
-			output := output + "C"
+			output = output + "C"
 			val -= 50
 		}else if(49 < val){
-			output := output + "IC"
+			output = output + "IC"
 			val -= 49
 		}else if(10 < val){
-			output := output + "X"
+			output = output + "X"
 			val -= 10
 		}else if(9 <= val){
-			output := output + "IX"
+			output = output + "IX"
 			val -= 9
 		}else if(5 < val){
-			output := output + "V"
+			output = output + "V"
 			val -= 5
 		}else if(4 <= val){
-			output := output + "IV"
+			output = output + "IV"
 			val -= 4
 		}else{
-			output := output + "I"
+			output = output + "I"
 			val -= 1
 		}
 	}
