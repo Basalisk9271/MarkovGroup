@@ -28,10 +28,10 @@ func main() {
 	var sum int64 = markovRange(lower, upper)
 	var col int64 = collapse(sum)
 
-	fmt.println("   Count: " + count);
-    fmt.println("     Sum: " + sum);
-    fmt.println("Collapse: " + col);
-    fmt.println("   Roman: " + toRoman(int(col)));
+	fmt.println("   Count: " + count)
+	fmt.println("     Sum: " + sum)
+	fmt.println("Collapse: " + col)
+	fmt.println("   Roman: " + toRoman(int(col)))
 	
 	if (col%2 == 0){
     	fmt.println("-- Hail Caesar!")
@@ -82,7 +82,7 @@ func collapse(num int64) int64 {
 	}
         
 	long sum = 0;
-	for i = num; i > 0; i /= 10){
+	for i = num; i > 0; i /= 10{
 		sum += (number %10);
 	}
 	return collapse(sum);
