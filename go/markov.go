@@ -1,6 +1,6 @@
-import ("fmt")
-
 package main
+
+import ("fmt")
 
 func main() {
 	var lower int64
