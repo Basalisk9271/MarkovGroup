@@ -58,27 +58,43 @@ func markovRange(lower int64 , upper int64 ) int64 {
 }
 
 func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64) int64 {
-	if(c > upper) return 0;
+	// Base cases
+	if(c > upper) return 0
     if(c < lower)
-        if(c <= 2)
-            return gen_markov_sequence(lower, upper, a, c, (3*a*c - b));
-        else
-            return gen_markov_sequence(lower, upper, a, c, (3*a*c - b))   //Top branch
-            +      gen_markov_sequence(lower, upper, b, c, (3*b*c - a));  //Bottom branch
-
+        if(c <= 2){
+			return gen_markov_sequence(lower, upper, a, c, (3*a*c - b))
+		}
+        else{
+			return gen_markov_sequence(lower, upper, a, c, (3*a*c - b))   //Top branch
+            +      gen_markov_sequence(lower, upper, b, c, (3*b*c - a))  //Bottom branch
+		}
+            
     COUNT++;
 
-    if(c <= 2)
-        return c 
+    if(c <= 2){
+		return c 
         + gen_markov_sequence(lower, upper, a, c, (3*a*c - b));  //Top branch ONLY
-    else 
-        return c 
+	}
+        
+    else {
+		return c 
         + gen_markov_sequence(lower, upper, a, c, (3*a*c - b))   //Top branch
         + gen_markov_sequence(lower, upper, b, c, (3*b*c - a));  //Bottom branch
+	}
+        
 }
 
-func collapse() int64 {
-
+func collapse(num int64) int64 {
+	var i int64
+	if(num < 10) {
+		return num
+	}
+        
+	long sum = 0;
+	for i = num; i > 0; i /= 10){
+		sum += (number %10);
+	}
+	return collapse(sum);
 }
 
 func toRoman() string {
