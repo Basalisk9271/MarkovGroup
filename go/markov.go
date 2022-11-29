@@ -32,25 +32,14 @@ func main() {
     fmt.println("     Sum: " + sum);
     fmt.println("Collapse: " + col);
     fmt.println("   Roman: " + toRoman(int(col)));
+	
 	if (col%2 == 0){
     	fmt.println("-- Hail Caesar!")
 	
 	}else{
 		fmt.println("-- et tu Brute!")
-	}
-	/*
 	
-	  System.out.println();
-        
-        long sum = markovRange(LOWER_BOUND, UPPER_BOUND);
-        long col = collapse(sum);
-
-        System.out.println("   Count: " + COUNT);
-        System.out.println("     Sum: " + sum);
-        System.out.println("Collapse: " + col);
-        System.out.println("   Roman: " + toRoman((int)(col)));
-        System.out.println(col%2==0 ? "-- Hail Caesar!" : "-- et tu Brute!");
-	*/
+	}
 
 }
 
