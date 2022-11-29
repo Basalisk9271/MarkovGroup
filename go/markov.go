@@ -3,8 +3,9 @@ import ("fmt")
 package main
 
 func main() {
-	var lower float64
-	var upper float64
+	var lower int64
+	var upper int64
+	var count int64
 	
 	fmt.Println("Lower: ")
 	fmt.Scan(&lower)
@@ -37,8 +38,8 @@ func toRoman(){
 
 //User input:
 
-var lower float64
-var upper float64
+var lower int64
+var upper int64
 
 fmt.Println("Lower: ")
 fmt.Scan(&lower)
