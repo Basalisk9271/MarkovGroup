@@ -34,20 +34,17 @@ func main() {
 		
 		} else {
 			fmt.Println("-- et tu Brute!")
-		
 		}
 	}
-	
-
 }
 
-func markovRange(lower int64 , upper int64 ) int64 {
+func markovRange(lower int64 , upper int64 ) int64 { 	
 	return gen_markov_sequence(lower, upper, 1, 1, 1)
 }
 
-func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64) int64 {
+func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64) int64 {  	//generating markov sequence
 	// Base cases 
-	if(c > upper){
+	if(c > upper){	
 		return 0
 	}
 
