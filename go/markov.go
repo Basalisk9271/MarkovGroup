@@ -88,28 +88,28 @@ func toRoman(val int) string {
 		output = "N"	
 	} else {
 		for (val > 0){
-			if(100 < val){
+			if(100 <= val){
 				output = output + "L"
 				val -= 100
-			}else if(99 < val){
+			}else if(99 == val){
 				output = output + "IL"
 				val -= 99
-			}else if(50 < val){
+			}else if(50 <= val){
 				output = output + "C"
 				val -= 50
-			}else if(49 < val){
+			}else if(49 == val){
 				output = output + "IC"
 				val -= 49
-			}else if(10 < val){
+			}else if(10 <= val){
 				output = output + "X"
 				val -= 10
-			}else if(9 <= val){
+			}else if(9 == val){
 				output = output + "IX"
 				val -= 9
-			}else if(5 < val){
+			}else if(5 <= val){
 				output = output + "V"
 				val -= 5
-			}else if(4 <= val){
+			}else if(4 == val){
 				output = output + "IV"
 				val -= 4
 			}else{
