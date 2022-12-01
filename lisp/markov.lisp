@@ -46,6 +46,7 @@
 
 ;; WORK WITH STRINGS
 (defun toRoman (val) (let ((output ""))
+    (if (= val 0) (setf output "N"))
     (loop while (< 0 val) do 
         (if (<= 9 val)(progn
             (setf output (concatenate 'string output "IX"))
@@ -71,11 +72,9 @@
       (col         0)
     )
 
-    (princ "[Lisp] Lower Bound: ") (terpri)
-    (setf LOWER_BOUND (read))
-    (princ "[Lisp] Upper Bound: ") (terpri)
-    (setf UPPER_BOUND (read))
-    (if (< UPPER_BOUND LOWER_BOUND) (rotatef LOWER_BOUND UPPER_BOUND))
+    (setf LOWER_BOUND (parse-integer (nth 1 *posix-argv*)))
+    (setf UPPER_BOUND (parse-integer (nth 2 *posix-argv*)))
+    (if (< UPPER_BOUND LOWER_BOUND) (rotatef LOWER_BOUND UPPER_BOUND)) ;; Swap
 
     (setf sum (markov LOWER_BOUND UPPER_BOUND))
     (setf col (truncate (collapse sum)))
