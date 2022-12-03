@@ -1,16 +1,9 @@
-with ada.text_io, ada.integer_text_io, Ada.Containers,  Ada.Containers.Ordered_Sets,  Ada.Command_Line, Ada.Strings.Unbounded;
+with ada.text_io, ada.integer_text_io, Ada.Containers,  Ada.Containers.Vectors,  Ada.Command_Line, Ada.Strings.Unbounded;
 use ada.text_io, ada.integer_text_io, Ada.Containers, Ada.Command_Line, Ada.Strings.Unbounded;
 
 
-with Ada.Containers; use Ada.Containers;
-with Ada.Containers.Vectors;
---with Ada.Containers; use Ada.Containers;
---with Ada.Containers.Ordered_Sets;
-
 procedure markov is
 
-	--global count variable
---	COUNT : Integer := 0;
 
 	-- defines a Set of Long_Integers to hold the Markov numbers
 	package Collatz_Vector is new Ada.Containers.Vectors  (Index_Type   => Natural, Element_Type => Long_Integer);
@@ -55,50 +48,6 @@ procedure markov is
 
 
 	end Gen_Markov;
-
-
-
-	-- generates the markov sequence using a recursive branched method
---	function Make_Markov(LOWER, UPPER : Long_Integer; a, b, c : Long_Integer) return Long_Integer is
---
---	begin
---		-- base cases
---		if (c > UPPER) then
---			return 0;
---		end if;
---
---		if(c < LOWER) then
---			if (c <= 2) then
---				-- top branch
---				return Make_Markov(LOWER, UPPER, a, c, (3*a*c - b));
---			else
---				-- top and bottom branch
---				return Make_Markov(LOWER, UPPER, a, c, (3*a*c - b)) + Make_Markov(LOWER, UPPER, a, c, (3*b*c - a));
---			end if;
---		end if;
---		
---		-- incrementing the global variable COUNT
---		markov.COUNT := markov.COUNT + 1;
---
---		if (c <= 2) then
---			-- top branch only
---			return c + Make_Markov(LOWER, UPPER, a, c, (3*a*c - b));
---		else
---			-- top and bottom branch
---			return c +  Make_Markov(LOWER, UPPER, a, c, (3*a*c - b)) +  Make_Markov(LOWER, UPPER, a, c, (3*b*c - a));
---		end if;
---
---
---	end Make_Markov;
-
-	
-	-- function accesible by the user to begin calculating the Markov numbers
---	function Markov_Range (LOWER, UPPER : Long_Integer) return Long_Integer is
---		a, b, c : Long_Integer := 1;
---	begin
---		return Make_Markov(LOWER, UPPER, a, b, c);
---
---	end Markov_Range;
 
 	function Sum_Vector( V : Vector) return Long_Integer is
 		SUM : Long_Integer := 0;
@@ -204,23 +153,6 @@ begin
 	--calculates number of markov sequence numbers iteratively
 	output := Gen_Markov(arg1, arg2);
 
-   for I in output.First_Index .. output.Last_Index loop
-      --  Displaying current index I
-             Put ("- ["
-                         & Extended_Index'Image (I)
-                                    & "] ");
-      
-                                         Put (Long_Integer'Image (output (I)));
-      --
-      --                                          --  We could also use the V.Element (I)
-      --                                                --  function to retrieve the element at
-      --                                                      --  the current index I
-      --
-                                                                  New_Line;
-                                                                     end loop;
-
-
-
 	--calculates sum of markov sequence numbers in the vector
 	sum := Sum_Vector(output);
 
@@ -228,7 +160,6 @@ begin
 	col := Collapse(sum);
 
 	Put_Line("Count: " & Count_Type'Image(output.Length));
---	Put_Line("Count: " & Integer'Image(COUNT));
 	Put_Line("Sum: " & Long_Integer'Image(sum));
 	Put_Line("Collapse: " & Long_Integer'Image(col));
 	Put_Line("Roman: " & To_String(Roman(Integer(col))));
