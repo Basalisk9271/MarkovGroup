@@ -5,17 +5,17 @@ Implemented in Rust
 */
 
 use std::env;
+use std::mem;
 
-/*fn markov_range(lower: i64, upper: i64) -> (Vec<i64>, i64) {
+fn markov_range(lower: i64, upper: i64) -> (Vec<i64>, i64) {
     // PRE: Bounds of the range are passed in. 
     // POST: Returns a vector containing the Markov numbers that fall within the given range and its sum. 
     
-    let mut markov: Vec<i64> = Vec::new();
-    let mut sum: i64 = 0;
+    let mut arr: Vec<i64> = Vec::new();
+    let sum: i64 = generate_markov(lower, upper, 1, 1, 1, &mut arr); 
+    arr.sort();
 
-
-
-    return (markov, sum);
+    return (arr, sum);
 }
 
 // Recursion based around Markov tree proof.
@@ -36,22 +36,22 @@ fn generate_markov(lower: i64, upper: i64, a: i64, b: i64, c: i64, list: &mut Ve
     // Tree traversal to jump into the given range. 
     if c < lower {
         if c <= 2 {
-            return generate_markov(lower, upper, a, c, 3*a*c - b, &mut list);
+            return generate_markov(lower, upper, a, c, 3*a*c - b, list);
         } else {
-            return generate_markov(lower, upper, a, c, 3*a*c - b, &mut list) 
-            +      generate_markov(lower, upper, a, c, 3*b*c - a, &mut list);
+            return generate_markov(lower, upper, a, c, 3*a*c - b, list) 
+            +      generate_markov(lower, upper, a, c, 3*b*c - a, list);
         }
     }
 
     if c <= 2 {
         // Traverse to the top/next linear node in the tree. 
-        return c + generate_markov(lower, upper, a, c, 3*a*c - b, &mut list);
+        return c + generate_markov(lower, upper, a, c, 3*a*c - b, list);
     } else {
         // Traverse to the top and bottom subtrees.
-        return c + generate_markov(lower, upper, a, c, 3*a*c - b, &mut list)
-                 + generate_markov(lower, upper, a, c, 3*b*c - a, &mut list);
+        return c + generate_markov(lower, upper, a, c, 3*a*c - b, list)
+                 + generate_markov(lower, upper, a, c, 3*b*c - a, list);
     }
-}*/
+}
 
 // Required recursive function. 
 fn collapse(number: i64) -> i64 {
@@ -104,7 +104,27 @@ fn main() {
     // PRE: Command line arguments are passed in to specify lower and upper bounds. 
     // POST: Outputs count, sum, and collapse of the Markov range. 
 
-    println!("{}", collapse(76));
-    println!("{}", to_roman(collapse(76)));
+    let args: Vec<String> = env::args().collect();
+    let mut lower: i64 = args[1].parse().unwrap();
+    let mut upper: i64 = args[2].parse().unwrap();
+
+    if lower > upper {
+        mem::swap(&mut lower, &mut upper);
+    }
+
+    let (markov, sum) = markov_range(lower, upper);
+    let col: i64 = collapse(sum);
+
+    println!("   Count: {}", markov.len());
+    println!("     Sum: {}", sum);
+    println!("Collapse: {}", collapse(sum));
+    println!("   Roman: {}", to_roman(col));
+
+    if col % 2 == 0 {
+        println!("-- Hail Caesar!");
+    } else {
+        println!("-- et tu Brute!");
+    }
+
 }
 
