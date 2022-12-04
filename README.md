@@ -1,92 +1,95 @@
 # CSC 330 - Group Project - Caramel Macchiato
 
-
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin http://anvil.cs.mercer.edu/pounds_courses/csc-330-group-project-caramel-macchiato.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](http://anvil.cs.mercer.edu/pounds_courses/csc-330-group-project-caramel-macchiato/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
+# Markov Numbers
 
 ## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+Write a program in different languages (C#, Go, Ada, Lisp, Rust, Cobol) that takes an command line integer arguments for a range of numbers. Then, the program will calculate the markov numbers within the range before returning an array of sorted Markov numbers within the range, the count of markov numbers, the sum of all of the markov numbers, the collapse to a single digit of the markov numbers, and the Roman numeral/message based on the number given in the collapse. 
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+*DISCLAIMER: The user must remember to add their command line arguments when calling the various versions of the program. Failure to do so will break the program in a way that exits the program run*
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## Functions
+This is a list of the functions included in the various iterations of this program
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+- `collatzSeq()` - This function implements the collatz conjecture rules and returns a count of the numbers in the sequence. This function is the only one that changes between the iterative and recursive versions of the programs. 
+- `BubbleSort()` - This function implements a bubble sort that has two different options depending on whether the user needs to sort by the integer numbers in descending order or the sequence counts in descending order. The choice is made by passing in a specific parameter usually in the form of a string or character. 
+- `linearSearch()` - This function searches the array to see if there is an entry that contains the same number for it's sequence count. The variable `searches` is defaulted to a -1 and will change to a 1 if there is an entry found that has the same number of sequence counts. Since the program runs from the lowest argument to the largest one, the lowest integer with the duplicate sequence count will be chosen for the array. This search is not the most efficient, but it will only be searching an array that is a max of 10 items long, which makes it a prime candidate for a nice, easy search to implement. This function returns an integer that can be used in the program logic. 
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
+## Authors and Acknowledgment
+Ervin Pangilinan - Group Leader
+Gabe Imlay - Repository Maintainer
+Mcgregor Koenig
+Stefan Mykytyn
+Taha Tas
+Katie Belle Duke
 
 ## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+ -- In Progress -- 
+
+## Langauges 
+
+#### *DISCAIMER: For the purpose of the example calls, the arguments being used in the run commands are the same input that was given to us by Dr. Pounds.*
+---
+### C#
+
+**Compilation:** 
+
+To compile, run:
+```
+mcs markov.cs
+```
+To execute, run:
+```
+mono markov.exe 1 20
+```
+### Go
+
+**Compilation:** Similar to Python, this can be achieved by running the single command below
+
+To compile, run:
+```
+go run markov.go 1 20
+```
+--- 
+### Ada
+
+**Compilation:**  
+
+To compile, run:
+```
+gnatmake markov.adb 
+```
+To execute, run:
+```
+./markov 1 20
+```
+--- 
+### Lisp
+
+**Compilation:** You'll need to make the file executable if it is not already by using `chmod 700 markov.lisp`. Then, run the command below to execute. 
+```
+./markov.lisp 1 20
+```
+--- 
+### Rust
+
+**Compilation:** 
+```
+rustc -O markov.rs
+```
+To execute, run:
+```
+./markov 1 20
+```
+---
+### Cobol
+
+**Compilation:** 
+```
+cobc -x markov.cob
+```
+To execute, run:
+```
+./markov 1 20
+```
+
+
