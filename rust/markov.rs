@@ -6,7 +6,7 @@ Implemented in Rust
 
 use std::env;
 
-fn markov_range(lower: i64, upper: i64) -> (Vec<i64>, i64) {
+/*fn markov_range(lower: i64, upper: i64) -> (Vec<i64>, i64) {
     // PRE: Bounds of the range are passed in. 
     // POST: Returns a vector containing the Markov numbers that fall within the given range and its sum. 
     
@@ -19,12 +19,12 @@ fn markov_range(lower: i64, upper: i64) -> (Vec<i64>, i64) {
 }
 
 // Recursion based around Markov tree proof.
-fn generate_markov(lower: i64, upper: i64, a: i64, b: i64, c: i64, &mut list: Vec<i64>) -> i64 {
+fn generate_markov(lower: i64, upper: i64, a: i64, b: i64, c: i64, list: &mut Vec<i64>) -> i64 {
     // PRE: Called from the helper function with the range to search through already specified. 
-    // POST: Recursively looks for Markov numbers that fall within range. 
+    // POST: Recursively looks for Markov numbers that fall within range and return its sum. 
 
     // Add to vector if the c-value is a unique Markov number. 
-    if c >= lower && c <= upper && !list.contains(c) {
+    if c >= lower && c <= upper && !list.contains(&c) {
         list.push(c);
     }
 
@@ -36,42 +36,75 @@ fn generate_markov(lower: i64, upper: i64, a: i64, b: i64, c: i64, &mut list: Ve
     // Tree traversal to jump into the given range. 
     if c < lower {
         if c <= 2 {
-            return generate_markov(lower, upper, a, c, (3*a*c - b));
+            return generate_markov(lower, upper, a, c, 3*a*c - b, &mut list);
         } else {
-            return generate_markov(lower, upper, a, c, (3*a*c - b)) 
-            +      generate_markov(lower, upper, a, c, (3*b*c - a));
+            return generate_markov(lower, upper, a, c, 3*a*c - b, &mut list) 
+            +      generate_markov(lower, upper, a, c, 3*b*c - a, &mut list);
         }
     }
 
     if c <= 2 {
         // Traverse to the top/next linear node in the tree. 
-        return c + generate_markov(lower, upper, a, c, (3*a*c - b));
+        return c + generate_markov(lower, upper, a, c, 3*a*c - b, &mut list);
     } else {
         // Traverse to the top and bottom subtrees.
-        return c + generate_markov(lower, upper, a, c, (3*a*c - b))
-                 + generate_markov(lower, upper, a, c, (3*b*c - a));
+        return c + generate_markov(lower, upper, a, c, 3*a*c - b, &mut list)
+                 + generate_markov(lower, upper, a, c, 3*b*c - a, &mut list);
     }
-}
+}*/
 
 // Required recursive function. 
-fn collapse() -> i64 {
+fn collapse(number: i64) -> i64 {
     // PRE: Sum of the Markov numbers is passed in. 
     // POST: Returns the collapse by recursively summing each digit until a single-digit integer is left. 
 
+    let mut sum: i64 = 0;
+    let mut i: i64 = number;
+    if number < 10 {
+        return number;
+    } else {
+        while i != 0 {
+            sum += i % 10;
+            i /= 10;
+        }
 
+        return collapse(sum);
+    }
 }
 
-fn to_roman() -> String {
+fn to_roman(mut value: i64) -> String {
     // PRE: Collapse is passed in. 
     // POST: Outputs a Roman numeral corresponding to the collapse. 
 
+    let mut roman: String = String::new();
+    if value == 0 {
+        roman = "N".to_string();
+    }
 
+    while value > 0 {
+        if 9 <= value {
+            roman += "IX";
+            value -= 9;
+        } else if 5 < value {
+            roman += "V";
+            value -= 5;
+        } else if 4 <= value {
+            roman += "IV";
+            value -= 4;
+        } else {
+            roman += "I";
+            value -= 1;
+        }
+    }
+
+    return roman;
 }
 
 fn main() {
     // PRE: Command line arguments are passed in to specify lower and upper bounds. 
     // POST: Outputs count, sum, and collapse of the Markov range. 
 
-    
+    println!("{}", collapse(76));
+    println!("{}", to_roman(collapse(76)));
 }
 
