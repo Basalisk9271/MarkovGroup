@@ -4,7 +4,6 @@
 
 (defvar TRACK 0)
 
-
 (defun markov (lower upper)
     (gen_markov_sequence lower upper 1 1 1)
 )
@@ -32,7 +31,6 @@
     )
 )
 
-;; CURRENTLY RETURNS A FLOAT
 (defun collapse (val) (let ((sum 0))
     (if (< val 10) (return-from collapse val)) ;; BASE CASE
 
@@ -41,7 +39,7 @@
         (setf val (ftruncate val 10))
     ) ;; END INNER LOOP
 
-    (collapse sum)
+    (truncate (collapse sum))
 )) ;; END FUNCTION COLLAPSE
 
 ;; WORK WITH STRINGS
@@ -66,10 +64,8 @@
 ))
 
 ;;;;;;;;;;;;;;;;;;;;;;; MAIN ;;;;;;;;;;;;;;;;;;;;;;;
-(let ((LOWER_BOUND 0)
-      (UPPER_BOUND 0)
-      (sum         0)
-      (col         0)
+(let ((LOWER_BOUND 0) (UPPER_BOUND 0)
+      (sum         0) (col         0)
     )
 
     (setf LOWER_BOUND (parse-integer (nth 1 *posix-argv*)))
@@ -77,7 +73,7 @@
     (if (< UPPER_BOUND LOWER_BOUND) (rotatef LOWER_BOUND UPPER_BOUND)) ;; Swap
 
     (setf sum (markov LOWER_BOUND UPPER_BOUND))
-    (setf col (truncate (collapse sum)))
+    (setf col (collapse sum))
 
     (format t "   Count: ~d~%" TRACK)
     (format t "     Sum: ~d~%" sum)
