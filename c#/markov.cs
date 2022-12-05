@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,56 +10,59 @@ class markov
     {
         long lowerBound = long.Parse(args[0]);
         long upperBound = long.Parse(args[1]);
-        uint count = 0;
-
-        if (lowerBound > upperBound)
-        {
-            (lowerBound, upperBound) = (upperBound, lowerBound);
-        }
-
-        long sum = markovRange(ref lowerBound, ref upperBound, ref count);
-        long col = collapse(sum);
-
-        Console.WriteLine("Count : " + count);
-        Console.WriteLine("Sum : " + sum);
-        Console.WriteLine("Collapse : " + col);
         
+
+        if (lowerBound > upperBound) (lowerBound, upperBound) = (upperBound, lowerBound);
+
+        long sum = 0; 
+        ArrayList arr = markovRange(ref lowerBound, ref upperBound, ref sum);
+        long col = collapse(sum);
+        long count = arr.Count;
+        string roman = toRoman(col);
+
+        Console.WriteLine("   Count : " + count);
+        Console.WriteLine("     Sum : " + sum);
+        Console.WriteLine("Collapse : " + col);
+        Console.WriteLine("   Roman : " + roman);
         Console.WriteLine(col%2==0 ? "-- Hail Caesar!" : "-- et tu Brute!");
 
     }
 
-    public static long markovRange(ref long lower, ref long upper, ref uint count)
+    public static ArrayList markovRange(ref long lower, ref long upper, ref long sum)
     {
-        int a, b, c;
-        a = b = c = 1;
-        return makeMarkov(ref lower, ref upper, ref count, a, b, c);
+        ArrayList arr = new ArrayList();
+        sum = generateMarkov(ref lower, ref upper, 1, 1, 1, ref arr);
+        arr.Sort();
+
+        return arr;
     }
 
-    private static long makeMarkov(ref long lower, ref long upper, ref uint count, int a, int b, int c)
+    private static long generateMarkov(ref long lower, ref long upper, int a, int b, int c, ref ArrayList arr)
     {
+        if (c >= lower && c <= upper && !arr.Contains(c)) arr.Add(c);
+
         if (c > upper) return 0;
         if (c < lower)
         {
             if (c <= 2)
             {
-                return makeMarkov(ref lower, ref upper, ref count, a, c, (3*a*c - b));
+                return generateMarkov(ref lower, ref upper, a, c, (3*a*c - b), ref arr);
             }
             else
             {
-                return makeMarkov(ref lower, ref upper, ref count, a, c, (3*a*c - b))
-                         + makeMarkov(ref lower, ref upper, ref count, a, c, (3*b*c - a));
+                return generateMarkov(ref lower, ref upper, a, c, (3*a*c - b), ref arr)
+                     + generateMarkov(ref lower, ref upper, a, c, (3*b*c - a), ref arr);
             }
         }
-        count++;
 
         if (c <= 2)
         {
-            return c + makeMarkov(ref lower, ref upper, ref count, a, c, (3*a*c - b));
+            return c + generateMarkov(ref lower, ref upper, a, c, (3*a*c - b), ref arr);
         }
         else
         {
-            return c + makeMarkov(ref lower, ref upper, ref count, a, c, (3*a*c - b))
-                     + makeMarkov(ref lower, ref upper, ref count, a, c, (3*b*c - a));
+            return c + generateMarkov(ref lower, ref upper, a, c, (3*a*c - b), ref arr)
+                     + generateMarkov(ref lower, ref upper, a, c, (3*b*c - a), ref arr);
         }
     }
 
@@ -67,17 +71,42 @@ class markov
         if (num < 10) return num;
 
         long sum = 0;
-        for (long number = num; number > 0; number /= 10)
-            sum += (number % 10);
+        for (long i = num; i > 0; i /= 10)
+            sum += (i % 10);
         return collapse(sum);
 
     }
 
-    /*private static string toRoman(int val)
-      {
-         string output = "";
+    private static string toRoman(long val)
+    {
+        string output = "";
+
+        if (val == 0) output = "N";
  
-      }*/
+        while (val > 0)
+        {
+            if (9 <= val)
+            {
+                output += "IX";
+                val -= 9;
+            }
+            else if (5 < val)
+            {
+                output += "V";
+                val -= 5;
+            }
+            else if (4 <= val)
+            {
+                output += "IV";
+                val -= 4;
+            } else {
+                output += "I";
+                val -= 1;
+            }
+        }
+
+        return output;
+    }
 
     
 
