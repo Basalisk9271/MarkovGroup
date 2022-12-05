@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+//Max Number Range: 1 - 1000000000000000000
+
 class markov
 {
     static void Main(string[] args)
@@ -15,8 +17,8 @@ class markov
         if (lowerBound > upperBound) (lowerBound, upperBound) = (upperBound, lowerBound);
 
         long sum = 0; 
-        ArrayList arr = markovRange(ref lowerBound, ref upperBound, ref sum);
-        long col = collapse(sum);
+        ArrayList arr = markovRange(lowerBound, upperBound, ref sum);
+        int col = (int) collapse(sum);
         long count = arr.Count;
         string roman = toRoman(col);
 
@@ -28,16 +30,28 @@ class markov
 
     }
 
-    public static ArrayList markovRange(ref long lower, ref long upper, ref long sum)
+    /*  --------------------------------------------------------------------------------
+    *   Parameters: lower, upper, and sum
+    *   Public helper function 
+    *   Creates an ArrayList and calculates sum by utilizing generateMarkov()
+    *   Sorts and returns ArrayList
+    *   --------------------------------------------------------------------------------*/
+    public static ArrayList markovRange(long lower, long upper, ref long sum)
     {
         ArrayList arr = new ArrayList();
-        sum = generateMarkov(ref lower, ref upper, 1, 1, 1, ref arr);
+        sum = generateMarkov(lower, upper, 1, 1, 1, ref arr);
         arr.Sort();
 
         return arr;
     }
 
-    private static long generateMarkov(ref long lower, ref long upper, int a, int b, int c, ref ArrayList arr)
+    /*  --------------------------------------------------------------------------------
+    *   Parameters: lower, upper, a, b, c, arr
+    *   Called by markovRange()
+    *   Recursively looks for Markov numbers
+    *   Returns the sum of the Markovs as long
+    *   --------------------------------------------------------------------------------*/
+    private static long generateMarkov(long lower, long upper, int a, int b, int c, ref ArrayList arr)
     {
         if (c >= lower && c <= upper && !arr.Contains(c)) arr.Add(c);
 
@@ -46,26 +60,32 @@ class markov
         {
             if (c <= 2)
             {
-                return generateMarkov(ref lower, ref upper, a, c, (3*a*c - b), ref arr);
+                return generateMarkov(lower, upper, a, c, (3*a*c - b), ref arr);
             }
             else
             {
-                return generateMarkov(ref lower, ref upper, a, c, (3*a*c - b), ref arr)
-                     + generateMarkov(ref lower, ref upper, a, c, (3*b*c - a), ref arr);
+                return generateMarkov(lower, upper, a, c, (3*a*c - b), ref arr)
+                     + generateMarkov(lower, upper, a, c, (3*b*c - a), ref arr);
             }
         }
 
         if (c <= 2)
         {
-            return c + generateMarkov(ref lower, ref upper, a, c, (3*a*c - b), ref arr);
+            return c + generateMarkov(lower, upper, a, c, (3*a*c - b), ref arr);
         }
         else
         {
-            return c + generateMarkov(ref lower, ref upper, a, c, (3*a*c - b), ref arr)
-                     + generateMarkov(ref lower, ref upper, a, c, (3*b*c - a), ref arr);
+            return c + generateMarkov(lower, upper, a, c, (3*a*c - b), ref arr)
+                     + generateMarkov(lower, upper, a, c, (3*b*c - a), ref arr);
         }
     }
 
+    /*  --------------------------------------------------------------------------------
+    *   Parameters: num
+    *   Called by main() and passed in sum
+    *   Recusively sums until reaches a single digit number
+    *   Returns a single digit value
+    *   --------------------------------------------------------------------------------*/
     private static long collapse(long num)
     {
         if (num < 10) return num;
@@ -77,7 +97,13 @@ class markov
 
     }
 
-    private static string toRoman(long val)
+    /*  --------------------------------------------------------------------------------
+    *   Parameters: val
+    *   Called by main() and passed in col
+    *   Calculates and creates string of a Roman Numeral representation of col
+    *   Returns Roman Numeral as string
+    *   --------------------------------------------------------------------------------*/
+    private static string toRoman(int val)
     {
         string output = "";
 
