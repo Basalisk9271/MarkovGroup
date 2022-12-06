@@ -12,8 +12,13 @@ fn markov_range(lower: i64, upper: i64) -> (Vec<i64>, i64) {
     // POST: Returns a vector containing the Markov numbers that fall within the given range and its sum. 
     
     let mut arr: Vec<i64> = Vec::new();
-    let sum: i64 = generate_markov(lower, upper, 1, 1, 1, &mut arr); 
+    let mut sum: i64 = generate_markov(lower, upper, 1, 1, 1, &mut arr); 
     arr.sort();
+ 
+    sum = 0;
+    for i in 0..arr.len() {
+        sum += arr[i];
+    }
 
     return (arr, sum);
 }
@@ -24,7 +29,7 @@ fn generate_markov(lower: i64, upper: i64, a: i64, b: i64, c: i64, list: &mut Ve
     // POST: Recursively looks for Markov numbers that fall within range and return its sum. 
 
     // Add to vector if the c-value is a unique Markov number. 
-    if c >= lower && c <= upper && !list.contains(&c) {
+    if c >= lower && c <= upper && !list.contains(&c) && 3*a*b*c == a*a + b*b + c*c {
         list.push(c);
     }
 
@@ -39,7 +44,8 @@ fn generate_markov(lower: i64, upper: i64, a: i64, b: i64, c: i64, list: &mut Ve
             return generate_markov(lower, upper, a, c, 3*a*c - b, list);
         } else {
             return generate_markov(lower, upper, a, c, 3*a*c - b, list) 
-            +      generate_markov(lower, upper, a, c, 3*b*c - a, list);
+            +      generate_markov(lower, upper, a, c, 3*b*c - a, list)
+            +      generate_markov(lower, upper, b, c, 3*a*b - c, list);
         }
     }
 
@@ -49,7 +55,8 @@ fn generate_markov(lower: i64, upper: i64, a: i64, b: i64, c: i64, list: &mut Ve
     } else {
         // Traverse to the top and bottom subtrees.
         return c + generate_markov(lower, upper, a, c, 3*a*c - b, list)
-                 + generate_markov(lower, upper, a, c, 3*b*c - a, list);
+                 + generate_markov(lower, upper, a, c, 3*a*b - c, list)
+                 + generate_markov(lower, upper, b, c, 3*b*c - a, list);
     }
 }
 
@@ -85,7 +92,7 @@ fn to_roman(mut value: i64) -> String {
         if 9 <= value {
             roman += "IX";
             value -= 9;
-        } else if 5 < value {
+        } else if 5 <= value {
             roman += "V";
             value -= 5;
         } else if 4 <= value {
