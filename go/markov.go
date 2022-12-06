@@ -19,8 +19,9 @@ func main() {
 			lower, upper = upper, lower
 		}
 		fmt.Println()
-
-		var sum int64 = markovRange(int64(lower), int64(upper)) 
+		markovArr := []int64{}
+		var sum int64 = markovRange(int64(lower), int64(upper), &markovArr) 
+		markovArr = bubbleSort(markovArr)
 		//must cast to int64 to take into markovRange as a parameter
 		var col int64 = collapse(sum)
 
@@ -35,32 +36,41 @@ func main() {
 		} else {
 			fmt.Println("-- et tu Brute!")
 		}
+
+		// print the array 
+		// for i := 0; i < len(markovArr); i++ {
+		// 	fmt.Println(markovArr[i])
+		//   }
 	}
 }
 
-func markovRange(lower int64 , upper int64 ) int64 { 	
-	return gen_markov_sequence(lower, upper, 1, 1, 1)
+func markovRange(lower int64 , upper int64, arr *[]int64) int64 { 	
+	return gen_markov_sequence(lower, upper, 1, 1, 1, arr)
 }
 
-func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64) int64 {  	//generating markov sequence
+func gen_markov_sequence(lower int64 , upper int64, a int64 , b int64, c int64, arr *[]int64) int64 {  	//generating markov sequence
 	// Base cases 
+	if (c >= lower && c <= upper && !contains(*arr, c)){
+		*arr = append(*arr, c)
+	}
+	
 	if(c > upper){	
 		return 0
 	}
 
     if(c < lower){
         if(c <= 2){
-			return gen_markov_sequence(lower, upper, a, c, (3*a*c - b))
+			return gen_markov_sequence(lower, upper, a, c, (3*a*c - b), arr)
 		} else {
-			return gen_markov_sequence(lower, upper, a, c, (3*a*c - b)) + gen_markov_sequence(lower, upper, b, c, (3*b*c - a))
+			return gen_markov_sequence(lower, upper, a, c, (3*a*c - b), arr) + gen_markov_sequence(lower, upper, b, c, (3*b*c - a), arr)
 		}
     }        
     count++
 
     if(c <= 2){
-		return c + gen_markov_sequence(lower, upper, a, c, (3*a*c - b))  
+		return c + gen_markov_sequence(lower, upper, a, c, (3*a*c - b), arr)  
 	} else {
-		return c + gen_markov_sequence(lower, upper, a, c, (3*a*c - b)) + gen_markov_sequence(lower, upper, b, c, (3*b*c - a))
+		return c + gen_markov_sequence(lower, upper, a, c, (3*a*c - b), arr) + gen_markov_sequence(lower, upper, b, c, (3*b*c - a), arr)
 	}
 }
 
@@ -102,3 +112,27 @@ func toRoman(val int) string {
 	}
 	return output
 }
+
+func contains(elems []int64, v int64) bool {
+    for _, s := range elems {
+        if v == s {
+            return true
+        }
+    }
+    return false
+}
+
+// bubbleSort sorts an array of int64 values in ascending order
+// using the bubble sort algorithm
+func bubbleSort(arr []int64) []int64 {
+	n := len(arr)
+	for i := 0; i < n-1; i++ {
+	  for j := 0; j < n-i-1; j++ {
+		if arr[j] > arr[j+1] {
+		  // swap arr[j] and arr[j+1]
+		  arr[j], arr[j+1] = arr[j+1], arr[j]
+		}
+	  }
+	}
+	return arr
+  }
