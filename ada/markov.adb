@@ -6,9 +6,14 @@ procedure markov is
 
 
 	-- defines a Set of Long_Integers to hold the Markov numbers
-	package Collatz_Vector is new Ada.Containers.Vectors  (Index_Type   => Natural, Element_Type => Long_Integer);
+	package Markov_Vector is new Ada.Containers.Vectors  (Index_Type   => Natural, Element_Type => Long_Integer);
 
-	use Collatz_Vector;
+	package Markov_Vectors_Sorting is new Markov_Vector.Generic_Sorting;
+
+
+
+	use Markov_Vector;
+	use Markov_Vectors_Sorting;
 
 
 	-- determines if the three numbers are a Markov chain
@@ -24,31 +29,64 @@ procedure markov is
 	end Is_Markov;
 
 
-	-- generates a set of the markov numbers between the Lower and Upper Value
-	function Gen_Markov(LOWER,UPPER : Long_Integer) return Vector is
-		Collatz_Nums : Vector;
+	-- generates the markov sequence using a recursive branched method
+	function Make_Markov(LOWER, UPPER : Long_Integer; a, b, c : Long_Integer; arr: access Vector) return Long_Integer is
 
-		begin
-			for i in LOWER..UPPER loop
-				for j in 0..UPPER loop
-					for k in 0..UPPER loop
-
-						if(Is_Markov(i,j,k)) then
-							--add the number that is between lower and upper to the set only if it is not already included
-							if (not Collatz_Nums.Contains(i)) then
-								Collatz_Nums.Append(i);
-							end if;
-						end if;
-					end loop;
-				end loop;
-			end loop;
-
-			return Collatz_Nums;
+	begin
+		-- add to vector if c is a unique markov number
+		if (c >= LOWER and c <= UPPER and not arr.Contains(c) and Is_Markov(a, b, c)) then
+			arr.Append(c);
+		end if;
 
 
 
-	end Gen_Markov;
+		-- base cases
+		if (c > UPPER) then
+		 		return 0;
+		 end if;
+		
+		 if(c < LOWER) then
+		 	if (c <= 2) then
+				--top branch
+				return Make_Markov(LOWER, UPPER, a, c, (3*a*c - b), arr);
+			else
+				-- top and bottom branch
+				return Make_Markov(LOWER, UPPER, a, c, (3*a*c - b), arr) 
+					+ Make_Markov(LOWER, UPPER, a, c, (3*b*c - a), arr)
+					+ Make_Markov(LOWER, UPPER, b, c, (3*a*b - c), arr);
+			end if;
+		end if;
+		
+		if (c <= 2) then
+			-- top branch only
+			return c + Make_Markov(LOWER, UPPER, a, c, (3*a*c - b), arr);
+		else
+			-- top and bottom branch
+			return c +  Make_Markov(LOWER, UPPER, a, c, (3*a*c - b), arr) 
+				+  Make_Markov(LOWER, UPPER, a, c, (3*b*c - a), arr)
+				+ Make_Markov(LOWER, UPPER, b, c, (3*b*c - a), arr);
+		end if;
 
+
+	end Make_Markov;
+
+	function Markov_Range (LOWER, UPPER : Long_Integer) return Vector is
+		a, b, c : Long_Integer := 1;
+
+		sum : Long_Integer := 0;
+
+		Markov_Nums : aliased Vector;
+	begin
+		sum := Make_Markov(LOWER, UPPER, a, b, c, Markov_Nums'Access);
+
+		Sort(Markov_Nums);
+		return Markov_Nums;
+
+
+	end Markov_Range;
+		
+
+	-- sums a vector and returns a long integer
 	function Sum_Vector( V : Vector) return Long_Integer is
 		SUM : Long_Integer := 0;
 
@@ -131,6 +169,7 @@ procedure markov is
 
 	output : Vector;
 
+
 begin
 	if Argument_Count = 0 then
 		Put_Line(Current_Error, "Error");
@@ -150,8 +189,10 @@ begin
 	end if;
 
 
-	--calculates number of markov sequence numbers iteratively
-	output := Gen_Markov(arg1, arg2);
+
+	-- returns vector of the markov numbers
+	output := Markov_Range(arg1, arg2);
+
 
 	--calculates sum of markov sequence numbers in the vector
 	sum := Sum_Vector(output);
