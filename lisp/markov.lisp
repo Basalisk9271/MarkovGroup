@@ -35,11 +35,11 @@
     (if (< val 10) (return-from collapse val)) ;; BASE CASE
 
     (loop while (< 0 val) do
-        (setf sum (+ sum (mod val 10)))
-        (setf val (ftruncate val 10))
+        (setf sum (truncate (+ sum (mod val 10))))
+        (setf val (truncate val 10))
     ) ;; END INNER LOOP
 
-    (truncate (collapse sum))
+    (truncate (collapse (truncate sum)))
 )) ;; END FUNCTION COLLAPSE
 
 ;; WORK WITH STRINGS
@@ -67,6 +67,9 @@
 (let ((LOWER_BOUND 0) (UPPER_BOUND 0)
       (sum         0) (col         0)
     )
+
+    ;(declare ((unsigned-byte 64) sum))
+    ;(princ "MAIN")(terpri)
 
     (setf LOWER_BOUND (parse-integer (nth 1 *posix-argv*)))
     (setf UPPER_BOUND (parse-integer (nth 2 *posix-argv*)))
