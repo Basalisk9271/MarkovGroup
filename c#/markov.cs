@@ -56,7 +56,7 @@ class markov
     *   Recursively looks for Markov numbers
     *   Returns the sum of the Markovs as long
     *   --------------------------------------------------------------------------------*/
-    private static long generateMarkov(long lower, long upper, int a, int b, int c, ref ArrayList arr)
+    private static long generateMarkov(long lower, long upper, long a, long b, long c, ref ArrayList arr)
     {
         if (c >= lower && c <= upper && !arr.Contains(c) && 3*a*b*c == a*a + b*b + c*c)
 	{
