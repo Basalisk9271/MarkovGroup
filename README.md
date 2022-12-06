@@ -7,12 +7,19 @@ Write a program in different languages (C#, Go, Ada, Lisp, Rust, Cobol) that tak
 
 *DISCLAIMER: The user must remember to add their command line arguments when calling the various versions of the program. Failure to do so will break the program in a way that exits the program run*
 
-## Functions
+## Logic and Algorithm
 This is a list of the functions included in the various iterations of this program
 
-- `collatzSeq()` - This function implements the collatz conjecture rules and returns a count of the numbers in the sequence. This function is the only one that changes between the iterative and recursive versions of the programs. 
-- `BubbleSort()` - This function implements a bubble sort that has two different options depending on whether the user needs to sort by the integer numbers in descending order or the sequence counts in descending order. The choice is made by passing in a specific parameter usually in the form of a string or character. 
-- `linearSearch()` - This function searches the array to see if there is an entry that contains the same number for it's sequence count. The variable `searches` is defaulted to a -1 and will change to a 1 if there is an entry found that has the same number of sequence counts. Since the program runs from the lowest argument to the largest one, the lowest integer with the duplicate sequence count will be chosen for the array. This search is not the most efficient, but it will only be searching an array that is a max of 10 items long, which makes it a prime candidate for a nice, easy search to implement. This function returns an integer that can be used in the program logic. 
+## Recursively Calculating the Markov Sequence   
+*talk about algorithm*   
+
+### function1()
+    *talk about function1()*  
+
+### function2()
+    *talk about function1()*  
+### function3()
+    *talk about function1()*    
 
 ## Authors and Acknowledgment
 Ervin Pangilinan - Group Leader
@@ -21,6 +28,7 @@ Mcgregor Koenig
 Stefan Mykytyn
 Taha Tas
 Katie Belle Duke
+
 
 ## Project status
  -- In Progress -- 
