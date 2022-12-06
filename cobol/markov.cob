@@ -9,7 +9,7 @@
        environment division.
        input-output section.
 
-       data division.
+       data division.        
        working-storage section.
            01 lower pic 9(2) value 10.
            01 upper pic 9(2) value 50.
@@ -17,13 +17,16 @@
            01 arg1 pic x(50).
            01 arg2 pic x(50).
 
-
+      *    Collapse Vars 
+           01 num usage is binary-long unsigned value 769.
+           01 coll pic 9(1) value 0.
+      *    End Collapse Vars
+           
       
 
 
        procedure division.
-          
-      * This language is actually cringe. * 
+
            accept cmdline from command-line.
            display cmdline.
            move function trim(cmdline) to cmdline.
@@ -40,15 +43,17 @@
            display "Upper: " upper.
 
 
-           cringe-para.
+       cringe-para.
            display lower. 
            add 1 to lower.
            
-           perform cringe-para until lower>upper. 
+       perform cringe-para until lower>upper. 
 
-           
+      * Collapse Call
+       collaps-para.
+           call 'collapse' using value num returning coll
+           display "Collapse: " coll.
+      * End Collapse Call
 
-
-
-           stop run.
+       stop run.
 
