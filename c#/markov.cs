@@ -41,6 +41,11 @@ class markov
         ArrayList arr = new ArrayList();
         sum = generateMarkov(lower, upper, 1, 1, 1, ref arr);
         arr.Sort();
+	sum = 0;
+	for (int i = 0; i < arr.Count; i++)
+	{
+		sum += Convert.ToInt64(arr[i]);
+	}
 
         return arr;
     }
@@ -53,7 +58,10 @@ class markov
     *   --------------------------------------------------------------------------------*/
     private static long generateMarkov(long lower, long upper, int a, int b, int c, ref ArrayList arr)
     {
-        if (c >= lower && c <= upper && !arr.Contains(c)) arr.Add(c);
+        if (c >= lower && c <= upper && !arr.Contains(c) && 3*a*b*c == a*a + b*b + c*c)
+	{
+ 		arr.Add(c);
+	}
 
         if (c > upper) return 0;
         if (c < lower)
@@ -65,7 +73,8 @@ class markov
             else
             {
                 return generateMarkov(lower, upper, a, c, (3*a*c - b), ref arr)
-                     + generateMarkov(lower, upper, a, c, (3*b*c - a), ref arr);
+                     + generateMarkov(lower, upper, a, c, (3*a*b - c), ref arr)
+		     + generateMarkov(lower, upper, b, c, (3*b*c - a), ref arr);
             }
         }
 
@@ -76,7 +85,8 @@ class markov
         else
         {
             return c + generateMarkov(lower, upper, a, c, (3*a*c - b), ref arr)
-                     + generateMarkov(lower, upper, a, c, (3*b*c - a), ref arr);
+                     + generateMarkov(lower, upper, a, c, (3*a*b - c), ref arr)
+		     + generateMarkov(lower, upper, b, c, (3*b*c - a), ref arr);
         }
     }
 
@@ -116,7 +126,7 @@ class markov
                 output += "IX";
                 val -= 9;
             }
-            else if (5 < val)
+            else if (5 <= val)
             {
                 output += "V";
                 val -= 5;
