@@ -4,7 +4,7 @@
        author.
            Caramel Macchiato
        date-written.
-           December 4, 2022.
+           December 7, 2022.
 
        environment division.
        input-output section.
@@ -21,8 +21,6 @@
            01 num usage is binary-long unsigned value 769.
            01 coll pic 9(1) value 0.
       *    End Collapse Vars
-           
-      
 
 
        procedure division.
@@ -36,12 +34,10 @@
            display arg1.
            display arg2.
 
-
            compute lower = function numval(arg1).
            compute upper = function numval(arg2).
            display "Lower: " lower.
            display "Upper: " upper.
-
 
        cringe-para.
            display lower. 
@@ -55,5 +51,9 @@
            display "Collapse: " coll.
       * End Collapse Call
 
+      * To Roman Call
+
+      
+        
        stop run.
 

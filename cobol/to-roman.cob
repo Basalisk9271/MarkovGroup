@@ -1,6 +1,7 @@
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. TO-ROMAN.
-       
+       PROGRAM-ID. 
+       TO-ROMAN.
+   
        DATA DIVISION.
        WORKING-STORAGE SECTION.
        
@@ -15,6 +16,10 @@
        
        ACCEPT INPUT-NUMBER
        
+    * turning the number into roman numerals
+      if INPUT-NUMBER = 0
+          MOVE "N" TO ROMAN-NUMERAL
+      end-if
        if INPUT-NUMBER = 1
           MOVE "I" TO ROMAN-NUMERAL
        end-if
