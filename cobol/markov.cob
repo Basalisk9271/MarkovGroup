@@ -17,7 +17,6 @@
            01 arg1 pic x(50).
            01 arg2 pic x(50).
 
-      *MakeMarkov Vars
            01 a usage is binary-long unsigned value 1.
            01 b usage is binary-long unsigned value 1.
            01 cval usage is binary-long unsigned value 1.
@@ -26,13 +25,9 @@
            01 Table-Search PIC 9(12).
            01 IndexNum usage is index value 1.
            01 summ usage is binary-long unsigned.
-      *End GenMarkov Vars
 
-      *    Collapse Vars 
            01 coll pic 9(1) value 0.
-      *    End Collapse Vars
-           
-      * Formatting Variables 
+
            01 sumP pic z(9)9.
            01 countP pic z(9)9. 
       
@@ -48,7 +43,7 @@
            compute lower = function numval(arg1).
            compute upper = function numval(arg2).
       
-      *Make Markov Sequence
+      * Make Markov Sequence
        makemarkov-para.
         
         PERFORM outer-para varying a from lower by 1 until a > upper.
@@ -70,12 +65,8 @@
                               
                            WHEN M-Value(I) = a
                               CONTINUE
-                        END-IF.                
-
-      *End Make Markov Sequence
+                        END-IF.
         
-        
-
       * Collapse Call
             collaps-para.
                 COMPUTE IndexNum = IndexNum - 1 
@@ -87,8 +78,7 @@
             call 'collapse' using value summ
                 returning coll
                 display "Collapse: " coll.
-      * End Collapse Call
-      *
+
       * Conversion to Roman Numeral
         DISPLAY "Roman: " WITH NO ADVANCING.
 
