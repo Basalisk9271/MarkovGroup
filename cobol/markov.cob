@@ -16,9 +16,18 @@
            01 cmdline pic x(50).
            01 arg1 pic x(50).
            01 arg2 pic x(50).
+      *     01 summ usage is binary-double unsigned.
+      *GenMarkov Vars
+           01 a PIC 9(12) COMP-5 value 1.
+           01 b PIC 9(12) COMP-5 value 1.
+           01 cval PIC 9(12) COMP-5 value 1.
+           01 M-Table.
+               05 M-Value PIC 9(12) OCCURS 150 TIMES INDEXED BY I.
+           01 summ usage is binary-long unsigned.
+      *End GenMarkov Vars
 
       *    Collapse Vars 
-           01 num usage is binary-long unsigned value 769.
+      *     01 num usage is binary-long unsigned value 769.
            01 coll pic 9(1) value 0.
       *    End Collapse Vars
            
@@ -43,15 +52,27 @@
            display "Upper: " upper.
 
 
-       cringe-para.
-           display lower. 
-           add 1 to lower.
+      *cringe-para.
+      *     display lower. 
+      *    add 1 to lower.
            
-       perform cringe-para until lower>upper. 
+      * perform cringe-para until lower>upper. 
+
+      * GenMarkov
+        genmarkov-para.
+           call 'genmarkov' using lower, upper, M-Table, a, b, cval
+                returning summ.
+           PERFORM VARYING I FROM 1 BY 1 UNTIL I > 7
+         DISPLAY M-Value(I)
+        END-PERFORM.
+      * End GenMarkov
+
+
+        display summ.
 
       * Collapse Call
        collaps-para.
-           call 'collapse' using value num returning coll
+           call 'collapse' using value summ returning coll
            display "Collapse: " coll.
       * End Collapse Call
 
